@@ -3,13 +3,13 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>com.skyjo</groupId>
-		<artifactId>com.skyjo</artifactId>
+		<groupId>skyjo</groupId>
+		<artifactId>skyjo.app</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	
-	<groupId>com.skyjo</groupId>
-	<artifactId>com.skyjo.api</artifactId>
+	<groupId>skyjo</groupId>
+	<artifactId>skyjo.api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>api</name>
 	<description>API project</description>
@@ -18,11 +18,12 @@
 	<properties>
 		<java.version>17</java.version>
 	</properties>
+	
 	<dependencies>
 		<!-- Projets -->
 		<dependency>
-            <groupId>com.skyjo</groupId>
-            <artifactId>core</artifactId>
+            <groupId>skyjo</groupId>
+            <artifactId>skyjo.core</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 		<!-- /projects -->

@@ -1,4 +1,4 @@
-package com.cav2.api;
+package com.skyjo.api;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

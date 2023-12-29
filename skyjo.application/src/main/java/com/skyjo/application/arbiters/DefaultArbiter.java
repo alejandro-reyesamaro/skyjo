@@ -2,6 +2,7 @@ package com.skyjo.application.arbiters;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.apache.logging.log4j.util.Strings;
@@ -63,10 +64,10 @@ public class DefaultArbiter implements IArbiter {
 
     public String getLooser(SkyJoSet set){
         List<PlayerSet> playerSetsCopy = new ArrayList<>(set.getPlayerSets());
-        Collections.sort(playerSetsCopy, new java.util.Comparator<PlayerSet>(){
+        Collections.sort(playerSetsCopy, new Comparator<PlayerSet>(){
             @Override
             public int compare(PlayerSet ps1, PlayerSet ps2) {
-                return getPlayerScore(ps1, set).compareTo(getPlayerScore(ps2, set));
+                return getPlayerScore(ps2, set).compareTo(getPlayerScore(ps1, set));
             }
 
         });
@@ -76,10 +77,10 @@ public class DefaultArbiter implements IArbiter {
     @Override
     public String getWinner(SkyJoSet set){
         List<PlayerSet> playerSetsCopy = new ArrayList<>(set.getPlayerSets());
-        Collections.sort(playerSetsCopy, new java.util.Comparator<PlayerSet>(){
+        Collections.sort(playerSetsCopy, new Comparator<PlayerSet>(){
             @Override
             public int compare(PlayerSet ps1, PlayerSet ps2) {
-                return getPlayerScore(ps2, set).compareTo(getPlayerScore(ps1, set));
+                return getPlayerScore(ps1, set).compareTo(getPlayerScore(ps2, set));
             }
 
         });

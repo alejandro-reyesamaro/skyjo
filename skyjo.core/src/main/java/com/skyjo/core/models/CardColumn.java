@@ -13,4 +13,9 @@ public class CardColumn {
     public CardColumn() {
         cards = new ArrayList<TableCard>();
     }
+
+    public CardColumn(int index, List<TableCard> cards) {
+        this.index = index;
+        this.cards = cards;
+    }
 }

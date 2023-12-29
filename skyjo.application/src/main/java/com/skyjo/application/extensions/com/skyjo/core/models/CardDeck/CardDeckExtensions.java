@@ -37,14 +37,14 @@ public class CardDeckExtensions {
         deck.setCardsPile(pile);
     }
 
-    public static void InitCardDeck(@This CardDeck deck, IShuffler shuffler){
+    public static void initCardDeck(@This CardDeck deck, IShuffler shuffler){
         deck.initCardsPile(shuffler);
         deck.setDiscard(deck.getCardsPile().pop());
         deck.getDiscard().setShown(true);
         deck.setPlayedCards(new ArrayList<Card>());
     }
 
-    public static Card PickCard(@This CardDeck deck, IShuffler shuffler){
+    public static Card pickCard(@This CardDeck deck, IShuffler shuffler){
         if (deck.getCardsPile().size() <= 0) {
             List<Card> playedCards = deck.getPlayedCards();
             shuffler.shuffle(playedCards);
@@ -56,19 +56,12 @@ public class CardDeckExtensions {
         return deck.getCardsPile().pop();
     }
 
-    public static Card GetDiscard(@This CardDeck deck){
+    public static Card getDiscard(@This CardDeck deck){
         Card discard = deck.getDiscard();
         if(discard == null) 
             throw new IllegalStateException("Asking for null Dis-Card");
         deck.setDiscard(null);
         return discard;
-    }
-
-    public static void DisCard(@This CardDeck deck, Card discard){
-        if (deck.getDiscard() != null)
-            deck.getPlayedCards().add(deck.getDiscard());
-        deck.setDiscard(discard);
-        deck.getDiscard().setShown(true);
     }
 
     private static void addCards(int count, int cardValue, List<Card> cards) {

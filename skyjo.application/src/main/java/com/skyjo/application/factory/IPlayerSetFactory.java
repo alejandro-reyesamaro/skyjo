@@ -1,4 +1,4 @@
-package com.skyjo.application.bots;
+package com.skyjo.application.factory;
 
 import java.util.List;
 

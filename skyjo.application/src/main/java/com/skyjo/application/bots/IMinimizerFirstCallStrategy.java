@@ -7,5 +7,5 @@ import com.skyjo.application.dto.protocol.PlayResult;
 
 public interface IMinimizerFirstCallStrategy {
     boolean applies(PlayResult result);
-    void Play(SkyJoSet set, PlayResult result, Card card);
+    void play(SkyJoSet set, PlayResult result, Card card);
 }

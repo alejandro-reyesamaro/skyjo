@@ -9,8 +9,10 @@ import com.skyjo.core.models.Player;
 import com.skyjo.core.models.PlayerSet;
 import com.skyjo.core.models.SkyJoSet;
 
+import manifold.ext.rt.api.Extension;
 import manifold.ext.rt.api.This;
 
+@Extension
 public class SkyJoSetExtensions {
 
     public static void initEvaluationBook(@This SkyJoSet set, List<Player> players) {

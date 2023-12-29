@@ -16,4 +16,10 @@ public class PlayerSet {
         columns = new ArrayList<>();
         isPlaying = true;
     }
+
+    public PlayerSet(List<CardColumn> columns, Player player) {
+        this.columns = columns;
+        this.player = player;
+        this.isPlaying = true;
+    }
 }

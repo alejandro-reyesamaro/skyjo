@@ -7,7 +7,7 @@ import com.skyjo.application.dto.CardInfo;
 import com.skyjo.application.dto.protocol.FlipResult;
 import com.skyjo.application.dto.protocol.PlayResult;
 
-public interface ISkyJoService {
+public interface ISkyJoAiService {
 
     FlipResult flipFirstCard(String serviceUrl);
     FlipResult flipSecondCard(String serviceUrl, CardInfo firstCard);

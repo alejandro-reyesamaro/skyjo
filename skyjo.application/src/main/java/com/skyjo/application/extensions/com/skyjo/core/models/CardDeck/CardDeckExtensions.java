@@ -25,7 +25,7 @@ public class CardDeckExtensions {
 
     public static void initCardsPile(@This CardDeck deck, IShuffler shuffler){
         ArrayList<Card> cards = new ArrayList<>();
-        int[] cardValues = IntStream.rangeClosed(-2, 12 + 3).toArray();
+        int[] cardValues = IntStream.rangeClosed(-2, 12).toArray();
         int[] minusZeroCounts = { 5, 10, 15 };
         int[] cardCounts = IntStream.concat(Arrays.stream(minusZeroCounts), IntStream.range(0, 12).map(i -> 10)).toArray();
         for (int i = 0; i < cardValues.length; i++) {

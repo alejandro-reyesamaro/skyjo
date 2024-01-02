@@ -1,8 +1,21 @@
 package com.skyjo.core.models;
 
+import lombok.Data;
+
+@Data
 public class Card {
     protected int value;
     protected boolean isShown;
+
+    public Card() {
+        this.value = 0;
+        this.isShown = false;
+    }
+
+    public Card(int value, boolean isShown) {
+        this.value = value;
+        this.isShown = isShown;
+    }
 
     @Override
     public boolean equals(Object obj)

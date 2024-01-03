@@ -14,7 +14,7 @@ public interface IPlayerService {
     List<Player> getActivePlayers();
     Optional<Player> getPlayer(int id);
     int updatePlayerIsActive(UpdatePlayersIsActiveForm form);
-    int updatePlayer(int playerId, PlayerForm form);
+    Optional<Player> updatePlayer(int playerId, PlayerForm form);
     Player insertPlayer(PlayerForm form);
-    int deletePlayer(int playerId);
+    void deletePlayer(int playerId);
 }

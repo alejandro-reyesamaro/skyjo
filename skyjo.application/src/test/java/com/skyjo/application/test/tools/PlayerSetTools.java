@@ -11,6 +11,10 @@ import com.skyjo.core.models.TableCard;
 
 public class PlayerSetTools {
 
+    public static PlayerSet createPlayerSet(int index, int nbHiddenCards) { 
+        return PlayerSetTools.createWithHiddenCards(index, true, nbHiddenCards);
+    }
+
     public static PlayerSet createWithHiddenCards(int index, boolean isPlaying, int hiddenCardsCount) {
         List<CardColumn> columnList = new ArrayList<CardColumn>();
         for(int col = 0; col < 4; col++){

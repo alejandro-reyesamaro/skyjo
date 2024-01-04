@@ -47,12 +47,20 @@ public class SkyJoSetTools {
         return set;
     }
 
-    public static SkyJoSet createForCountingException(String winner, String looser) {
-        return createForCounting(winner, looser, true);
-    }
-
     public static SkyJoSet createForCountingOK(String winner, String looser) {
-        return createForCounting(winner, looser, false);
+        List<PlayerSet> playerSets = new ArrayList<PlayerSet>();
+        SkyJoSet set = new SkyJoSet();
+        set.setEvaluationBlock(new HashMap<String, Integer>());
+
+        // Winner
+        set.getEvaluationBlock().put(winner, 0);
+        playerSets.add(PlayerSetTools.createWithTheseCards(winner, new int[] { 1, -1, -2, 0, 2, 1, -1, 0, 1, 0, -1, 1 }));
+
+        // Looser
+        set.getEvaluationBlock().put(looser, 0);
+        playerSets.add(PlayerSetTools.createWithTheseCards(looser, new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 }));
+        set.setPlayerSets(playerSets);
+        return set;
     }
 
     public static SkyJoSet createForNextPlayer(String playerToPLay, String... players) {
@@ -81,22 +89,6 @@ public class SkyJoSetTools {
             playerSets.add(ps);
         }
         var set = new SkyJoSet();
-        set.setPlayerSets(playerSets);
-        return set;
-    }
-
-    private static SkyJoSet createForCounting(String winner, String looser, boolean exception) {
-        List<PlayerSet> playerSets = new ArrayList<PlayerSet>();
-        SkyJoSet set = new SkyJoSet();
-        set.setEvaluationBlock(new HashMap<String, Integer>());
-
-        // Winner
-        set.getEvaluationBlock().put(exception ? "unknown" : winner, 0);
-        playerSets.add(PlayerSetTools.createWithTheseCards(winner, new int[] { 1, -1, -2, 0, 2, 1, -1, 0, 1, 0, -1, 1 }));
-
-        // Looser
-        set.getEvaluationBlock().put(looser, 0);
-        playerSets.add(PlayerSetTools.createWithTheseCards(looser, new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 }));
         set.setPlayerSets(playerSets);
         return set;
     }

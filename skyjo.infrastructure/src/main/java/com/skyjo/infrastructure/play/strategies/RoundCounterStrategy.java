@@ -37,13 +37,13 @@ public class RoundCounterStrategy implements IPlayStrategy {
         int round = set.getRound();
 
         SkyJoSet skyJoSet = mapper.map(set, SkyJoSet.class);
-        if(!set.getCloserPlayer().isPresent())
+        if(set.getCloserPlayer() == null || !set.getCloserPlayer().isPresent())
             throw new IllegalArgumentException("Null or empty closer player for counting");
 
         CounterResult result = arbiter.countPoints(skyJoSet, set.getCloserPlayer().get());
 
         List<String> messages = new ArrayList<>();
-        if (result.getCloserScore() < result.getMinScore()) {
+        if (result.getCloserScore() == result.getMinScore()) {
             // Closer wins:
             messages.add(buildRoundWinnerMessage(set.getCloserPlayer().get(), round));
         }

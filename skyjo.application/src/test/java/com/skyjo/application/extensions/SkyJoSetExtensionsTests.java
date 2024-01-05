@@ -70,7 +70,7 @@ public class SkyJoSetExtensionsTests {
     }
 
     @Test
-    public void AllCardsShown_No() {
+    public void allCardsShown_No() {
         SkyJoSet set = SkyJoSetTools.createPlayerSets(12, 12, 10);
         boolean result = set.allCardsShown();
         assertThat(result).isFalse();

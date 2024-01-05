@@ -26,24 +26,15 @@ public class SkyJoSetExtensions {
     }
 
     public static boolean hasAnyHiddenCard(@This SkyJoSet set) {
-        return set.getPlayerSets().stream()
-            .anyMatch(ps -> ps.getColumns().stream()
-                .anyMatch(col -> col.getCards().stream()
-                    .anyMatch(card -> !card.getCard().isShown())));
+        return set.getPlayerSets().stream().anyMatch(ps -> ps.hasAnyHiddenCard());
     }
 
     public static boolean allCardsAreHidden(@This SkyJoSet set) {
-        return set.getPlayerSets().stream()
-            .allMatch(ps -> ps.getColumns().stream()
-                    .allMatch(col -> col.getCards().stream()
-                            .allMatch(card -> !card.getCard().isShown())));
+        return set.getPlayerSets().stream().allMatch(ps -> ps.allCardsAreHidden());
     }
 
     public static boolean allCardsShown(@This SkyJoSet set) {
-        return set.getPlayerSets().stream()
-            .allMatch(ps -> ps.getColumns().stream()
-                    .allMatch(col -> col.getCards().stream()
-                            .allMatch(card -> card.getCard().isShown())));
+        return set.getPlayerSets().stream().allMatch(ps -> ps.allCardsShown());
     }
 
     public static boolean isPlaying(@This SkyJoSet set, String player) {

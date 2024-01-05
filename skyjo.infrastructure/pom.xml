@@ -8,10 +8,10 @@
   </parent>
 
   <groupId>skyjo</groupId>
-  <artifactId>skyjo.application</artifactId>
+  <artifactId>skyjo.infrastructure</artifactId>
   <version>0.0.1-SNAPSHOT</version>
 
-  <name>skyjo.application</name>
+  <name>skyjo.infrastructure</name>
   <!-- FIXME change it to the project's website -->
   <url>http://www.example.com</url>
 
@@ -19,8 +19,8 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.7</maven.compiler.source>
     <maven.compiler.target>1.7</maven.compiler.target>
-    <manifold.version>2023.1.33</manifold.version>
     <lombok.version>1.18.30</lombok.version>
+    <manifold.version>2023.1.33</manifold.version>
   </properties>
 
   <dependencies>
@@ -28,6 +28,13 @@
 		<dependency>
       <groupId>skyjo</groupId>
       <artifactId>skyjo.core</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+      <scope>compile</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>skyjo</groupId>
+      <artifactId>skyjo.application</artifactId>
       <version>0.0.1-SNAPSHOT</version>
       <scope>compile</scope>
     </dependency>
@@ -44,6 +51,23 @@
       <artifactId>manifold-ext-rt</artifactId>
       <version>${manifold.version}</version>
     </dependency>
+
+    <dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.microsoft.sqlserver</groupId>
+			<artifactId>mssql-jdbc</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.modelmapper</groupId>
+			<artifactId>modelmapper</artifactId>
+			<version>3.0.0</version>
+		</dependency>
 
     <dependency>
       <groupId>junit</groupId>
@@ -95,17 +119,8 @@
           <version>2.22.1</version>
         </plugin>
         <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-jar-plugin</artifactId>
           <version>3.0.2</version>
-          <configuration>
-            <archive>
-              <manifestEntries>
-                <!--class files as source must be available for extension method classes-->
-                <Contains-Sources>java,class</Contains-Sources>
-              </manifestEntries>
-            </archive>
-          </configuration>
         </plugin>
         <plugin>
           <artifactId>maven-install-plugin</artifactId>
@@ -124,7 +139,6 @@
           <artifactId>maven-project-info-reports-plugin</artifactId>
           <version>3.0.0</version>
         </plugin>
-
       </plugins>
     </pluginManagement>
   </build>

@@ -1,4 +1,4 @@
-package com.skyjo.application.test.tools;
+package com.skyjo.infrastructure.test.tools;
 
 import java.util.ArrayList;
 import java.util.List;

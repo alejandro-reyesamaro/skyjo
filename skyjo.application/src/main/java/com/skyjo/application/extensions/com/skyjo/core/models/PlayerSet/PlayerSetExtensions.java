@@ -6,6 +6,7 @@ import java.util.List;
 import com.skyjo.core.models.Card;
 import com.skyjo.core.models.CardColumn;
 import com.skyjo.core.models.PlayerSet;
+import com.skyjo.core.models.SkyJoSet;
 import com.skyjo.core.models.TableCard;
 import com.skyjo.application.dto.CardInfo;
 import com.skyjo.application.dto.Location;
@@ -112,6 +113,24 @@ public class PlayerSetExtensions {
             .orElseThrow(() -> new IllegalStateException(FLIP_ANSWER_COLUMN_ERROR_MSG));
 
         return new CardInfo(card.getCard().getValue(), location);
+    }
+
+    public static boolean hasAnyHiddenCard(@This PlayerSet set) {
+        return set.getColumns().stream()
+            .anyMatch(col -> col.getCards().stream()
+            .anyMatch(card -> !card.getCard().isShown()));
+    }
+
+    public static boolean allCardsAreHidden(@This PlayerSet set) {
+        return set.getColumns().stream()
+            .allMatch(col -> col.getCards().stream()
+            .allMatch(card -> !card.getCard().isShown()));
+    }
+
+    public static boolean allCardsShown(@This PlayerSet set) {
+        return set.getColumns().stream()
+            .allMatch(col -> col.getCards().stream()
+            .allMatch(card -> card.getCard().isShown()));
     }
 
     private static boolean allEqual(CardColumn column) {

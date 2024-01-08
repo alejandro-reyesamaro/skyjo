@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.skyjo.application.dto.form.PlayerForm;
 import com.skyjo.application.dto.form.UpdatePlayersIsActiveForm;
@@ -14,6 +15,7 @@ import com.skyjo.core.models.Player;
 import com.skyjo.infrastructure.repository.IPlayerRepository;
 import com.skyjo.infrastructure.repository.PlayerEntity;
 
+@Service
 public class PlayerService implements IPlayerService {
 
     @Autowired

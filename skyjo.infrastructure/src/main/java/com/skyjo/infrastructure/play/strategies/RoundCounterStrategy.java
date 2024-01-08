@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.skyjo.application.arbiters.IArbiter;
 import com.skyjo.application.bots.IDealer;
@@ -16,6 +17,7 @@ import com.skyjo.core.models.PlayerSet;
 import com.skyjo.core.models.SkyJoSet;
 import com.skyjo.infrastructure.play.dtos.SkyJoSetDto;
 
+@Component
 public class RoundCounterStrategy implements IPlayStrategy {
 
     @Autowired

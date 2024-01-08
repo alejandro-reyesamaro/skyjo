@@ -2,6 +2,8 @@ package com.skyjo.infrastructure.services;
 
 import java.util.Random;
 
+import org.springframework.stereotype.Service;
+
 import com.skyjo.application.dto.CardInfo;
 import com.skyjo.application.dto.Location;
 import com.skyjo.application.dto.protocol.FlipResult;
@@ -12,6 +14,7 @@ import com.skyjo.core.models.CardColumn;
 import com.skyjo.core.models.PlayerSet;
 import com.skyjo.core.models.TableCard;
 
+@Service
 public class ApiCallerAiSkyJoPlayerService implements ISkyJoAiService {
 
     @Override

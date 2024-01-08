@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
-@Table(name = "Costumer")
+@Table(name = "Player")
 @Data
 public class PlayerEntity {
 
@@ -24,6 +24,8 @@ public class PlayerEntity {
 
     @Column(name = "IsActive")
     protected boolean isActive;
+
+    public PlayerEntity() {}
 
     public PlayerEntity(String name, String email, String serviceAddress) {
         this.name = name;

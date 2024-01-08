@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.skyjo.application.bots.IMinimizer;
 import com.skyjo.core.models.PlayerSet;
@@ -15,6 +16,7 @@ import com.skyjo.application.extensions.com.skyjo.core.models.SkyJoSet.*;
 
 import io.micrometer.common.util.StringUtils;
 
+@Component
 public class CardExchangeStrategy implements IPlayStrategy {
 
     private static final String WRONG_PLAYER_TO_PLAY_ERROR_MSG = "Wrong player to play";

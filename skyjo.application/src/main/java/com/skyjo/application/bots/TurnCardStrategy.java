@@ -2,6 +2,7 @@ package com.skyjo.application.bots;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.config.Task;
+import org.springframework.stereotype.Component;
 
 import com.skyjo.application.arbiters.IArbiter;
 import com.skyjo.application.dto.play.result.CardTurnResult;
@@ -10,6 +11,7 @@ import com.skyjo.core.models.Card;
 import com.skyjo.core.models.PlayerSet;
 import com.skyjo.core.models.SkyJoSet;
 
+@Component
 public class TurnCardStrategy implements IMinimizerSecondCallStrategy {
 
     @Autowired

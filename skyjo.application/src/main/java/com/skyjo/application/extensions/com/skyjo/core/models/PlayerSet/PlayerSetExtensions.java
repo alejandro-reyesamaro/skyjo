@@ -6,7 +6,6 @@ import java.util.List;
 import com.skyjo.core.models.Card;
 import com.skyjo.core.models.CardColumn;
 import com.skyjo.core.models.PlayerSet;
-import com.skyjo.core.models.SkyJoSet;
 import com.skyjo.core.models.TableCard;
 import com.skyjo.application.dto.CardInfo;
 import com.skyjo.application.dto.Location;
@@ -41,7 +40,7 @@ public class PlayerSetExtensions {
                 NewPlayerColumnResult newColumnResult = newPlayerColumn(column, newCard, playLocation);
                 result.setDiscard(newColumnResult.getDiscard());
                 if (allEqual(newColumnResult.getNewColumn())){
-                    result = CardChangeResultFactory.BuildFromColumn(newColumnResult.getNewColumn(), newColumnResult.getDiscard());
+                    result = CardChangeResultFactory.buildFromColumn(newColumnResult.getNewColumn(), newColumnResult.getDiscard());
                 }
                 else {
                     newPlayerColumns.add(newColumnResult.getNewColumn());

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.skyjo.application.arbiters.IArbiter;
 import com.skyjo.application.factory.IPlayerSetFactory;
@@ -12,6 +13,7 @@ import com.skyjo.core.models.Player;
 import com.skyjo.core.models.PlayerSet;
 import com.skyjo.core.models.SkyJoSet;
 
+@Component
 public class DefaultDealer implements IDealer {
 
     private static final String EMPTY_PLAYER_LIST_ERROR_MSG = "Empty player list to deal";

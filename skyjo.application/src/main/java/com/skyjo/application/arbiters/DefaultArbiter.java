@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.apache.logging.log4j.util.Strings;
+import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 import com.skyjo.core.models.CardColumn;
@@ -15,6 +16,7 @@ import com.skyjo.core.models.SkyJoSet;
 
 import com.skyjo.application.dto.play.result.CounterResult;
 
+@Component
 public class DefaultArbiter implements IArbiter {
 
     private static final int MAX_POINTS = 100;

@@ -1,12 +1,14 @@
 package com.skyjo.application.bots;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.skyjo.application.dto.CardInfo;
 import com.skyjo.application.dto.protocol.FlipResult;
 import com.skyjo.application.services.ISkyJoAiService;
 import com.skyjo.core.models.PlayerSet;
 
+@Component
 public class DefaultFlipper implements IFlipper{
 
     @Autowired

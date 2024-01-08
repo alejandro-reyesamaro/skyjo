@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.skyjo.application.dto.protocol.PlayResult;
 import com.skyjo.application.services.ISkyJoAiService;
@@ -11,6 +12,7 @@ import com.skyjo.core.models.Card;
 import com.skyjo.core.models.PlayerSet;
 import com.skyjo.core.models.SkyJoSet;
 
+@Component
 public class PickCardStrategy implements IMinimizerFirstCallStrategy {
 
     @Autowired

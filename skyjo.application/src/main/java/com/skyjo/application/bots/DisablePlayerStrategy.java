@@ -2,11 +2,14 @@ package com.skyjo.application.bots;
 
 import java.util.Objects;
 
+import org.springframework.stereotype.Component;
+
 import com.skyjo.application.dto.protocol.PlayResult;
 import com.skyjo.core.models.Card;
 import com.skyjo.core.models.PlayerSet;
 import com.skyjo.core.models.SkyJoSet;
 
+@Component
 public class DisablePlayerStrategy implements IMinimizerFirstCallStrategy, IMinimizerSecondCallStrategy {
 
     @Override

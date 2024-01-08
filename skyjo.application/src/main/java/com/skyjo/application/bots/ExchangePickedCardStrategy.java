@@ -1,9 +1,12 @@
 package com.skyjo.application.bots;
 
+import org.springframework.stereotype.Component;
+
 import com.skyjo.application.dto.protocol.PlayResult;
 import com.skyjo.core.models.Card;
 import com.skyjo.core.models.SkyJoSet;
 
+@Component
 public class ExchangePickedCardStrategy extends BaseExchangeStrategy implements IMinimizerSecondCallStrategy {
 
     @Override

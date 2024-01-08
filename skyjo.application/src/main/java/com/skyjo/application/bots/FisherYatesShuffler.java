@@ -4,8 +4,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import org.springframework.stereotype.Component;
+
 import com.skyjo.core.models.Card;
 
+@Component
 public class FisherYatesShuffler implements IShuffler {
 
     @Override

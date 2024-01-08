@@ -10,7 +10,7 @@ import com.skyjo.application.dto.play.result.CardChangeResult;
 
 public class CardChangeResultFactory {
 
-    public static CardChangeResult BuildFromColumn(CardColumn column, Card discard)
+    public static CardChangeResult buildFromColumn(CardColumn column, Card discard)
         {
             List<Card> cards = new ArrayList<>();
             Card newDiscard = column.getCards().get(0).getCard();

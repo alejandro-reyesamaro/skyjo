@@ -17,9 +17,7 @@ public class SkyJoApiConfiguration {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/costumer/**").allowedOrigins(corsWhiteList);
-				registry.addMapping("/account/**").allowedOrigins(corsWhiteList);
-				registry.addMapping("/transaction/**").allowedOrigins(corsWhiteList);
+                registry.addMapping("/players/**").allowedOrigins(corsWhiteList);
             }
         };
     }

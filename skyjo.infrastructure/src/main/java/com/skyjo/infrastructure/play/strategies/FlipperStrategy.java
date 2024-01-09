@@ -27,7 +27,8 @@ public class FlipperStrategy implements IPlayStrategy {
 
     @Override
     public boolean applies(SkyJoSetDto set) {
-        return mapper.map(set, SkyJoSet.class).allCardsAreHidden();
+        return arbiter.isLegalNumberOfPlayers(set.getPlayerSets().size()) &&
+            mapper.map(set, SkyJoSet.class).allCardsAreHidden();
     }
 
     @Override

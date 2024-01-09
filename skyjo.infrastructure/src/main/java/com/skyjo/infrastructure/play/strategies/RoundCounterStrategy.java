@@ -45,17 +45,13 @@ public class RoundCounterStrategy implements IPlayStrategy {
         CounterResult result = arbiter.countPoints(skyJoSet, set.getCloserPlayer().get());
 
         List<String> messages = new ArrayList<>();
-        if (result.getCloserScore() == result.getMinScore()) {
+        if (result.getCloserScore() == result.getMinScore() && result.getWinner().equals(set.getCloserPlayer().get())) {
             // Closer wins:
             messages.add(buildRoundWinnerMessage(set.getCloserPlayer().get(), round));
         }
         else {
             // Other player wins:
             // Closer player doubles its score 
-            if(result.getCloserScore() > 0) {
-                int currentScore = skyJoSet.getEvaluationBlock().get(set.getCloserPlayer().get());
-                skyJoSet.getEvaluationBlock().put(set.getCloserPlayer().get(), currentScore + result.getCloserScore());
-            }
             messages.add(buildRoundWinnerMessage(result.getWinner(), round));
             messages.add(String.format("%s doubles its score", set.getCloserPlayer().get()));
         }

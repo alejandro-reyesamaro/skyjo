@@ -39,24 +39,23 @@ public class CardExchangeStrategy implements IPlayStrategy {
         SkyJoSetDto mappedResult = mapper.map(mappedSet, SkyJoSetDto.class);
 
         Optional<PlayerSet> playerSet = set.getPlayerSets().stream()
-            .filter(ps -> ps.getPlayer().getName() == set.getPlayerToPlay())
+            .filter(ps -> ps.getPlayer().getName().equals(set.getPlayerToPlay()))
             .findFirst();
-        if (playerSet.isPresent())
-        {
-            String closer = !set.getCloserPlayer().isPresent() && currentPlayerSetClosed(set)
-                    ? playerSet.get().getPlayer().getName()
-                    : set.getCloserPlayer().get();
+        if (playerSet.isPresent()) {
+            Optional<String> closer = set.getCloserPlayer().isEmpty() && currentPlayerSetIsClosed(set)
+                ? Optional.of(playerSet.get().getPlayer().getName())
+                : set.getCloserPlayer();
 
             mappedResult.setScreenMessages(createScreenMessage(mappedResult.getPlayerSets(), mappedResult.getPlayerToPlay(), closer));
             mappedResult.setRound(set.getRound());
-            mappedResult.setCloserPlayer(Optional.of(closer));
+            mappedResult.setCloserPlayer(closer);
 
             return mappedResult;
         }
         else throw new IllegalStateException(WRONG_PLAYER_TO_PLAY_ERROR_MSG);
     }
 
-    private boolean currentPlayerSetClosed(SkyJoSetDto set) {
+    private boolean currentPlayerSetIsClosed(SkyJoSetDto set) {
         Optional<PlayerSet> playerSet = set.getPlayerSets().stream()
             .filter(ps -> ps.getPlayer().getName().equals(set.getPlayerToPlay()))
             .findFirst();
@@ -68,13 +67,15 @@ public class CardExchangeStrategy implements IPlayStrategy {
         else throw new IllegalStateException(WRONG_PLAYER_TO_PLAY_ERROR_MSG);
     }
     
-    private List<String> createScreenMessage(List<PlayerSet> playerSets, String nextPlayer, String closerPlayer) {
+    private List<String> createScreenMessage(List<PlayerSet> playerSets, String nextPlayer, Optional<String> closerPlayer) {
         List<String> messages = new ArrayList<>();
         if (playerSets.stream().allMatch(ps -> ps.getColumns().stream().allMatch(col -> col.getCards().stream().allMatch(card -> card.getCard().isShown())))){
             messages.add("The round is over");
             return messages;
         }
-        messages.add(String.format("Close player: %s", closerPlayer));
+        if(closerPlayer.isPresent())
+            messages.add(String.format("Close player: %s", closerPlayer.get()));
+
         messages.add(String.format("Player's turn: %s", nextPlayer));
         return messages;
     }

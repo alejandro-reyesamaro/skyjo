@@ -40,7 +40,7 @@ public class RoundCounterStrategyTests {
     }
 
     @Test
-    public void applies_someCardsHidden_true() {
+    public void applies_noCardsHidden_true() {
         SkyJoSetDto dto = SkyJoSetDtoTools.createPlayerSets(0, 0, 0);
         strategy.mapper = new ModelMapper();
         boolean result = strategy.applies(dto);
@@ -57,7 +57,8 @@ public class RoundCounterStrategyTests {
     @Test
     public void play_closerWins_itsOver() {
         String winner = "Alex";
-        SkyJoSetDto dto = SkyJoSetDtoTools.createForCloserWinsItsOver(winner, "John", 1);
+        String looser = "John";
+        SkyJoSetDto dto = SkyJoSetDtoTools.createForCloserWinsItsOver(winner, looser, 1);
         CounterResult counterResult = new CounterResult();
         counterResult.setMinScore(10);
         counterResult.setCloserScore(10);
@@ -73,6 +74,9 @@ public class RoundCounterStrategyTests {
         assertThat(result.getCloserPlayer().get()).isEqualTo(winner);
         assertThat(result.getPlayerToPlay()).isEmpty();
         assertThat(result.getRound()).isEqualByComparingTo(0);
+
+        assertThat(dto.getEvaluationBlock().get(winner)).isEqualByComparingTo(1);
+        assertThat(dto.getEvaluationBlock().get(looser)).isEqualByComparingTo(78);
     }
 
     @Test
@@ -94,6 +98,33 @@ public class RoundCounterStrategyTests {
         assertThat(result.getCloserPlayer().get()).isEqualTo(looser);
         assertThat(result.getPlayerToPlay()).isEmpty();
         assertThat(result.getRound()).isEqualByComparingTo(0);
+
+        assertThat(result.getEvaluationBlock().get(winner)).isEqualByComparingTo(1);
+        assertThat(result.getEvaluationBlock().get(looser)).isEqualByComparingTo(78);
+    }
+
+    @Test
+    public void play_tie_itsOver_otherWins() {
+        String closer = "Alex";
+        String other = "John";
+        SkyJoSetDto dto = SkyJoSetDtoTools.createForTieItsOver(closer, other, 1);
+        CounterResult counterResult = new CounterResult();
+        counterResult.setMinScore(78);
+        counterResult.setCloserScore(78);
+        counterResult.setWinner(other);
+        when(arbiter.countPoints(any(), any())).thenReturn(counterResult);
+        when(arbiter.itsOver(any())).thenReturn(true);
+        strategy.mapper = new ModelMapper();
+
+        SkyJoSetDto result = strategy.play(dto);
+
+        assertThat(result.getScreenMessages().size()).isEqualByComparingTo(5);
+        assertThat(result.getCloserPlayer().get()).isEqualTo(closer);
+        assertThat(result.getPlayerToPlay()).isEmpty();
+        assertThat(result.getRound()).isEqualByComparingTo(0);
+
+        assertThat(result.getEvaluationBlock().get(closer)).isEqualByComparingTo(78);
+        assertThat(result.getEvaluationBlock().get(other)).isEqualByComparingTo(78);
     }
 
     @Test

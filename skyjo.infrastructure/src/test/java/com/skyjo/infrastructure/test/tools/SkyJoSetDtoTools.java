@@ -2,15 +2,12 @@ package com.skyjo.infrastructure.test.tools;
 
 import java.util.AbstractMap;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
-import com.skyjo.core.models.Player;
 import com.skyjo.core.models.PlayerSet;
-import com.skyjo.core.models.SkyJoSet;
 import com.skyjo.infrastructure.play.dtos.SkyJoSetDto;
 
 public class SkyJoSetDtoTools {
@@ -55,103 +52,42 @@ public class SkyJoSetDtoTools {
         return set;
     }
 
+    public static SkyJoSetDto createForTieItsOver(String closer, String other, int round) {
+        SkyJoSetDto set = createTie(closer, other);
+        set.setCloserPlayer(Optional.of(closer));
+        set.setRound(round);
+        return set;
+    }
+
     private static SkyJoSetDto createForCounting(String winner, String looser) {
         List<PlayerSet> playerSets = new ArrayList<PlayerSet>();
         SkyJoSetDto set = new SkyJoSetDto();
         set.setEvaluationBlock(new HashMap<String, Integer>());
 
         // Winner
-        set.getEvaluationBlock().put(winner, 0);
+        set.getEvaluationBlock().put(winner, 1);
         playerSets.add(PlayerSetTools.createWithTheseCards(winner, new int[] { 1, -1, -2, 0, 2, 1, -1, 0, 1, 0, -1, 1 }));
 
         // Looser
-        set.getEvaluationBlock().put(looser, 0);
+        set.getEvaluationBlock().put(looser, 78);
         playerSets.add(PlayerSetTools.createWithTheseCards(looser, new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 }));
 
         set.setPlayerSets(playerSets);
         return set;
     }
 
-
-
-
-
-
-
-
-
-
-
-    public static SkyJoSet createWithEvaluationBlock(int... scores) {
-        SkyJoSet set = new SkyJoSet();
-        set.setEvaluationBlock(new HashMap<>());
-
-        IntStream.range(0, scores.length)
-            .forEach(index -> set.getEvaluationBlock().put("Player_" + index, scores[index]));
-
-        return set;
-    }
-
-    public static SkyJoSet createWithWinnerAndLooserOk(String winner, String looser) {
-        return createWithWinnerAndLooser(winner, looser, true);
-    }
-
-    public static SkyJoSet createWithWinnerAndLooserFail(String winner, String looser){
-        return createWithWinnerAndLooser(winner, looser, false);
-    }
-
-    
-
-    
-
-    public static SkyJoSet createForNextPlayer(String playerToPLay, String... players) {
+    private static SkyJoSetDto createTie(String closer, String other) {
         List<PlayerSet> playerSets = new ArrayList<PlayerSet>();
-        for(String player : players){
-            Player p = new Player();
-            p.setName(player);
-            PlayerSet ps = new PlayerSet();
-            ps.setPlayer(p);
-            playerSets.add(ps);
-        }
-        var set = new SkyJoSet();
-        set.setPlayerSets(playerSets);
-        set.setPlayerToPlay(playerToPLay);
-        return set;
-    }
+        SkyJoSetDto set = new SkyJoSetDto();
+        set.setEvaluationBlock(new HashMap<String, Integer>());
 
-    public static SkyJoSet createForNotPlayingPlayer(String playerNotPlaying, String... players) {
-        List<PlayerSet> playerSets = new ArrayList<PlayerSet>();
-        for (String player : players){
-            Player p = new Player();
-            p.setName(player);
-            PlayerSet ps = new PlayerSet();
-            ps.setPlayer(p);
-            ps.setPlaying(playerNotPlaying != player);
-            playerSets.add(ps);
-        }
-        var set = new SkyJoSet();
-        set.setPlayerSets(playerSets);
-        return set;
-    }
+        // Closer
+        set.getEvaluationBlock().put(closer, 78);
+        playerSets.add(PlayerSetTools.createWithTheseCards(closer, new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 }));
 
-    
-
-    private static SkyJoSet createWithWinnerAndLooser(String winner, String looser, boolean success) {
-        List<PlayerSet> playerSets = new ArrayList<>();
-        SkyJoSet set = new SkyJoSet();
-        set.setEvaluationBlock(new HashMap<>());
-
-        // Winner
-        set.getEvaluationBlock().put(winner, 50);
-        Player player = new Player();
-        player.setName(success ? winner : "unknown");
-        playerSets.add(new PlayerSet(Collections.emptyList(), player));
-
-        // Loser
-        set.getEvaluationBlock().put(looser, 150);
-        Player looserPlayer = new Player();
-        looserPlayer.setName(looser);
-        playerSets.add(new PlayerSet(Collections.emptyList(), looserPlayer));
+        // Looser
+        set.getEvaluationBlock().put(other, 78);
+        playerSets.add(PlayerSetTools.createWithTheseCards(other, new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 }));
 
         set.setPlayerSets(playerSets);
         return set;

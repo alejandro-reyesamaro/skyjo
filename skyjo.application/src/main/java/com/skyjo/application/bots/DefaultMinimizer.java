@@ -27,8 +27,8 @@ public class DefaultMinimizer implements IMinimizer {
 
     @Override
     public void play(SkyJoSet set){
-        if (StringUtils.hasLength(set.getPlayerToPlay())){
-            throw new IllegalStateException("Null player (for minimizer0 found)");
+        if (!StringUtils.hasLength(set.getPlayerToPlay())){
+            throw new IllegalArgumentException("Null player (for minimizer) found");
         }
 
         PlayerSet playerSet = set.getPlayerSets().stream()

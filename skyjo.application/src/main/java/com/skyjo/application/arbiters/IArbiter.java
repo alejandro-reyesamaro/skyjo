@@ -13,7 +13,7 @@ public interface IArbiter {
     int getMaxPoints();
     int getMinPlayers();
     int getMaxPlayers();
-    boolean isLegalNumberOfPLayers(int playerNb);
+    boolean isLegalNumberOfPlayers(int playerNb);
     String playerToStart(List<PlayerSet> playerSets);
     boolean itsOver(SkyJoSet set);
     String getLooser(SkyJoSet set);

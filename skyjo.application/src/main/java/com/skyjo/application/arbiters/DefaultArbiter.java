@@ -3,7 +3,10 @@ package com.skyjo.application.arbiters;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Component;
@@ -39,7 +42,7 @@ public class DefaultArbiter implements IArbiter {
     }
 
     @Override
-    public boolean isLegalNumberOfPLayers(int playerNb) {
+    public boolean isLegalNumberOfPlayers(int playerNb) {
         return playerNb >= getMinPlayers() && playerNb <= getMaxPlayers();
     }
 
@@ -48,7 +51,7 @@ public class DefaultArbiter implements IArbiter {
         String playerToPlay = "";
         int maxScore = -4;
         for(PlayerSet ps : playerSets) {
-            int sumPoints = Sum(ps.getColumns());
+            int sumPoints = sum(ps.getColumns());
             if (sumPoints > maxScore) {
                 playerToPlay = ps.getPlayer().getName();
                 if(Strings.isEmpty(playerToPlay))
@@ -90,71 +93,79 @@ public class DefaultArbiter implements IArbiter {
     }
 
     @Override
-    public CounterResult countPoints(SkyJoSet set, String closerPlayer){
+    public CounterResult countPoints(SkyJoSet set, String closerPlayer) {
         CounterResult result = new CounterResult();
-        for (PlayerSet playerSet : set.getPlayerSets())
-        {
-            int playerScore = playerSet.getColumns()
-                .stream()
-                .flatMap(column -> column.getCards().stream())
-                .mapToInt(card -> card.getCard().getValue())
-                .sum();
+        Map<String, Integer> roundPoints = new HashMap<>();
+
+        for (PlayerSet playerSet : set.getPlayerSets()) {
+            int playerScore = sum(playerSet.getColumns());
             String player = playerSet.getPlayer().getName();
-            Integer score = getPlayerScore(playerSet, set);
 
-            set.getEvaluationBlock().put(player, score + playerScore);
-            if (closerPlayer == player) {
-                result.setCloserScore(playerScore);
-            }
+            // Get round points
+            roundPoints.put(player, playerScore);
 
-            if (playerScore < result.getMinScore()) {
+            // Select min-score player
+            if (playerScore < result.getMinScore() || (playerScore == result.getMinScore() && result.getWinner().equals(closerPlayer))) {
                 result.setMinScore(playerScore);
                 result.setWinner(player);
             }
+
+            // Set closer score
+            if (closerPlayer == player) {
+                result.setCloserScore(playerScore);
+            }
         }
+
+        // Aggregate points
+        for(Map.Entry<String, Integer> entry : roundPoints.entrySet()) {
+            String player = entry.getKey();
+            int score = player.equals(closerPlayer) && !closerPlayer.equals(result.getWinner())
+                ? 2 * entry.getValue()
+                : entry.getValue();
+            set.getEvaluationBlock().put(player, score);
+        }
+        
         return result;
     }
 
     @Override
-    public void setNextPlayer(SkyJoSet set){
-        PlayerSet[] playerSets = set.getPlayerSets().toArray(new PlayerSet[0]);
-        String previousPlayer2play = set.getPlayerToPlay();
-        for (int i = 0; i < playerSets.length; i++){
-            if (playerSets[i].getPlayer().getName() == set.getPlayerToPlay()) {
-                String nextPlayer = playerSets[i == playerSets.length - 1 ? 0 : i + 1].getPlayer().getName();
-                set.setPlayerToPlay(nextPlayer);
-                return;
-            }
-        }
-        if (previousPlayer2play.equals(set.getPlayerToPlay()))
-            throw new IllegalStateException("Wrong Player to Play");
+    public void setNextPlayer(SkyJoSet set) {
+        //PlayerSet[] playerSets = set.getPlayerSets().toArray(new PlayerSet[set.getPlayerSets().size()]);
+        String currentPlayer2playName = set.getPlayerToPlay();
+        Optional<PlayerSet> currentPlayer2play = set.getPlayerSets().stream()
+            .filter(ps -> ps.getPlayer().getName().equals(currentPlayer2playName))
+            .findFirst();
+        if(currentPlayer2play.isEmpty())
+            throw new IllegalStateException("Wrong current Player-to-Play");
+
+        int currentPlayer2playIndex = set.getPlayerSets().indexOf(currentPlayer2play.get());
+        String nextPlayer2playName = set.getPlayerSets()
+            .get(currentPlayer2playIndex == set.getPlayerSets().size() - 1 ? 0 : currentPlayer2playIndex + 1)
+            .getPlayer()
+            .getName();
+        
+        set.setPlayerToPlay(nextPlayer2playName);
+        
+        if (currentPlayer2playName.equals(set.getPlayerToPlay()))
+            throw new IllegalStateException("Wrong next Player-to-Play");
     }
 
     @Override
     public boolean canDeal(List<Player> players) {
-        return !CollectionUtils.isEmpty(players) && isLegalNumberOfPLayers(players.size());
+        return !CollectionUtils.isEmpty(players) && isLegalNumberOfPlayers(players.size());
     }
 
     @Override
     public boolean canDeal(SkyJoSet set) {
-        return !CollectionUtils.isEmpty(set.getPlayerSets()) && isLegalNumberOfPLayers(set.getPlayerSets().size());
+        return !CollectionUtils.isEmpty(set.getPlayerSets()) && isLegalNumberOfPlayers(set.getPlayerSets().size());
     }
 
-    private int Sum(List<CardColumn> columns){
+    private int sum(List<CardColumn> columns){
         return columns
             .stream()
             .flatMap(column -> column.getCards().stream())
             .mapToInt(card -> card.getCard().isShown() ? card.getCard().getValue() : 0)
-            .sum();
-            /*
-        int sum = 0;
-        for (CardColumn cardColumn : columns) {
-            for (TableCard card : cardColumn.getCards()) {
-                sum += card.getCard().isShown() ? card.getCard().getValue() : 0;
-            }
-        }
-        return sum;
-        */        
+            .sum();    
     }
     
     private Integer getPlayerScore(PlayerSet playerSet, SkyJoSet set) {

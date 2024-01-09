@@ -9,7 +9,7 @@ import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 public abstract class FailCrudStrategy<T extends BaseResponse> implements ICrudResponseStrategy<T> {
 
     @Override
-    public boolean itApplies(T response) {
+    public boolean applies(T response) {
         return !response.isSuccess();
     }
 

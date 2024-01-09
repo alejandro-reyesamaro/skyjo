@@ -7,7 +7,7 @@ import com.skyjo.api.controllers.response.BaseResponse;
 public abstract class SuccessCrudStrategy<T extends BaseResponse> implements ICrudResponseStrategy<T> {
 
     @Override
-    public boolean itApplies(T response) {
+    public boolean applies(T response) {
         return response.isSuccess();
     }
 

@@ -47,6 +47,11 @@
     </dependency>
 
     <dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
+
+    <dependency>
       <groupId>systems.manifold</groupId>
       <artifactId>manifold-ext-rt</artifactId>
       <version>${manifold.version}</version>

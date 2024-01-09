@@ -2,6 +2,7 @@ package com.skyjo.api.controllers;
 
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.skyjo.api.controllers.dto.PlayerDto;
 import com.skyjo.api.controllers.response.AddPlayerResponse;
 import com.skyjo.api.controllers.response.BaseResponse;
 import com.skyjo.api.controllers.strategies.ICrudResponseStrategy;
@@ -27,6 +29,9 @@ public class PlayerController {
 
 	@Autowired
 	protected IPlayerService service;
+
+	@Autowired
+	protected ModelMapper mapper;
 
 	@Autowired
     protected List<ICrudResponseStrategy<AddPlayerResponse>> addStrategies;
@@ -49,8 +54,9 @@ public class PlayerController {
 	}
 
 	@PostMapping("")
-	public ResponseEntity<BaseResponse> addPlayer(@Validated @RequestBody PlayerForm body) {
-		Player player = service.insertPlayer(body);
+	public ResponseEntity<BaseResponse> addPlayer(@Validated @RequestBody PlayerDto body) {
+		PlayerForm form = mapper.map(body, PlayerForm.class);
+		Player player = service.insertPlayer(form);
 		var response = AddPlayerResponse.fromResult(player);
 		return CrudControllerHelper.runStrategies(addStrategies, response);
 	}

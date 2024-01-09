@@ -18,7 +18,7 @@ public class CrudControllerHelper {
     
     public static <T extends BaseResponse> ResponseEntity<BaseResponse> runStrategies(List<ICrudResponseStrategy<T>> strategies, T result) {
         for(ICrudResponseStrategy<T> s : strategies) {
-            if(s.itApplies(result)){
+            if(s.applies(result)) {
                 return s.run(result);
             }
         }

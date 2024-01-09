@@ -21,42 +21,63 @@ public class PlayerSetExtensionsTests {
     protected PlayerSet set;
 
     @Test
-    public void hasAnyHiddenCard_No() {
+    public void hasAnyHiddenCard_empty_no() {
+        PlayerSet set = new PlayerSet();
+        boolean result = set.hasAnyHiddenCard();
+        assertThat(result).isFalse();
+    }
+
+    @Test
+    public void hasAnyHiddenCard_no() {
         PlayerSet set = PlayerSetTools.createPlayerSet(0, 0);
         boolean result = set.hasAnyHiddenCard();
         assertThat(result).isFalse();
     }
 
     @Test
-    public void hasAnyHiddenCard_Yes(){
+    public void hasAnyHiddenCard_yes(){
         PlayerSet set = PlayerSetTools.createPlayerSet(0, 2);
         boolean result = set.hasAnyHiddenCard();
         assertThat(result).isTrue();
     }
 
     @Test
-    public void allCardsAreHidden_No() {
+    public void allCardsAreHidden_empty_no() {
+        PlayerSet set = new PlayerSet();
+        boolean result = set.allCardsAreHidden();
+        assertThat(result).isFalse();
+    }
+
+    @Test
+    public void allCardsAreHidden_no() {
         PlayerSet set = PlayerSetTools.createPlayerSet(0, 10);
         boolean result = set.allCardsAreHidden();
         assertThat(result).isFalse();
     }
 
     @Test
-    public void allCardsAreHidden_Yes() {
+    public void allCardsAreHidden_yes() {
         PlayerSet set = PlayerSetTools.createPlayerSet(0, 12);
         boolean result = set.allCardsAreHidden();
         assertThat(result).isTrue();
     }
 
     @Test
-    public void allCardsShown_No() {
+    public void allCardsShown_empty_no() {
+        PlayerSet set = new PlayerSet();
+        boolean result = set.allCardsShown();
+        assertThat(result).isFalse();
+    }
+
+    @Test
+    public void allCardsShown_no() {
         PlayerSet set = PlayerSetTools.createPlayerSet(0, 10);
         boolean result = set.allCardsShown();
         assertThat(result).isFalse();
     }
 
     @Test
-    public void allCardsShown_Yes() {
+    public void allCardsShown_yes() {
         PlayerSet set = PlayerSetTools.createPlayerSet(0, 0);
         boolean result = set.allCardsShown();
         assertThat(result).isTrue();

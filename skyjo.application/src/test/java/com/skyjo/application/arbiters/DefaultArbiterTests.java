@@ -61,6 +61,9 @@ public class DefaultArbiterTests {
         assertThat(result.getWinner()).isEqualTo(winner);
         assertThat(result.getCloserScore()).isEqualByComparingTo(78);
         assertThat(result.getMinScore()).isEqualByComparingTo(1);
+
+        assertThat(set.getEvaluationBlock().get(winner)).isEqualByComparingTo(1);
+        assertThat(set.getEvaluationBlock().get(looser)).isEqualByComparingTo(156);
     }
 
     @Test

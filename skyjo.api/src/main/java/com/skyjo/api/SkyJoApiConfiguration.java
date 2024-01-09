@@ -18,6 +18,7 @@ public class SkyJoApiConfiguration {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/players/**").allowedOrigins(corsWhiteList);
+                registry.addMapping("/skyjo/**").allowedOrigins(corsWhiteList);
             }
         };
     }

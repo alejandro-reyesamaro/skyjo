@@ -121,13 +121,15 @@ public class PlayerSetExtensions {
     }
 
     public static boolean allCardsAreHidden(@This PlayerSet set) {
-        return set.getColumns().stream()
+        return set.getColumns().size() > 0 && 
+            set.getColumns().stream()
             .allMatch(col -> col.getCards().stream()
             .allMatch(card -> !card.getCard().isShown()));
     }
 
     public static boolean allCardsShown(@This PlayerSet set) {
-        return set.getColumns().stream()
+        return set.getColumns().size() > 0 &&
+            set.getColumns().stream()
             .allMatch(col -> col.getCards().stream()
             .allMatch(card -> card.getCard().isShown()));
     }
